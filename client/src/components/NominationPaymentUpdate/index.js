@@ -473,15 +473,12 @@ class NominationPayments extends React.Component {
         
         var errorMessage = "Security deposit time should be within " + moment(electionTimeline.paymentStart).format("DD MMM YYYY hh:mm a")  + " and " + moment(electionTimeline.paymentEnd).format("DD MMM YYYY hh:mm a");
         var errorTextPayment = false;
-        //payment start should be before now time 
-        if (moment(paymentStart).isAfter(TodayFormatedWithTime)) {
-          errorTextPayment = true;
-          debugger;
-        }
-      //now time should be before payment end
-      if (moment(TodayFormatedWithTime).isAfter(paymentEnd)) {
-          errorTextPayment = true;
-        }
+        if (moment(paymentStart).isBefore(TodayFormatedWithTime)) {
+            errorTextPayment = true;
+          }
+        if (moment(TodayFormatedWithTime).isBefore(paymentEnd)) {
+            errorTextPayment = true;
+          }
 
         const suggestions = partyListByType.map(suggestion => ({
             value: suggestion.team_id,
