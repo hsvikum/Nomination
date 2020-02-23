@@ -541,7 +541,7 @@ class NominationReview extends React.Component {
           </div>
           <br />
           <br />
-          <Grid style={{ textAlign: 'center', marginRight: '25px' }} className={classes.label} item lg={12}>
+          <Grid style={{ textAlign: 'right', marginRight: '25px' }} className={classes.label} item lg={12}>
             { !isWithinValidTimeFrame ? <SummeryView
                 variant={"warning"}
                 className={classes.margin}
@@ -564,7 +564,7 @@ NominationReview.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ Nomination,Election }) => {
+const mapStateToProps = ({ Nomination }) => {
   /*const {all_nominations} = Nomination;
   return {all_nominations}*/
   const { getApproveElections } = Nomination;
@@ -572,19 +572,18 @@ const mapStateToProps = ({ Nomination,Election }) => {
 
   const ApproveElections = Nomination.approveElections;
   const partyList = Nomination.partyList;
-  const ElectionData = Election.ElectionTimeLineData;
+
 
   const nominations = Nomination.nominations;
 
-  return { nominations, getApproveElections, ApproveElections, getTeams, partyList,ElectionData };
+  return { nominations, getApproveElections, ApproveElections, getTeams, partyList };
 };
 
 const mapActionsToProps = {
   getNominations,
   getApproveElections,
   onChangeApproval,
-  getTeams,
-  getElectionTimeLine
+  getTeams
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(NominationReview));
