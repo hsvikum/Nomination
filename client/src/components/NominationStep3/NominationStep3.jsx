@@ -4,7 +4,6 @@ import {withStyles} from '@material-ui/core/styles';
 import FileUpload from "../common/FileUpload";
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -248,8 +247,7 @@ class TextFields extends React.Component {
                             </option>
                         </TextField>
                         </Grid>
-                        <Grid item xs={1} implementation="css" component={Hidden} />
-                        <Grid style={{marginTop:'7.5px', marginLeft:'-10%'}} item xs="3">
+                        <Grid style={{marginTop:'7.5px',marginLeft:'-4%'}} item xs="3">
                         {/* <Button variant="contained" onClick = { this.handlePdfGenarationButton }  size="small"  value="Submit&DownloadPdf" color="secondary" className={classes.button}>
                           <DownloadIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
                           Download PDF
