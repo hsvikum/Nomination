@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { APPROVAL_STATE } from './state/NominationTypes';
 import { getNominations, onChangeApproval, getApproveElections, getTeams } from './state/NominationAction';
-import { getElectionTimeLine } from '../election/state/ElectionAction';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -46,8 +45,6 @@ import axios from "axios";
 import {API_BASE_URL} from "../../config";
 import download from "downloadjs";
 import GetAppIcon from '@material-ui/icons/GetApp';
-import SummeryView from "../../components/SummeryView";
-import moment from "moment";
 
 const drawerWidth = 240;
 
@@ -162,13 +159,12 @@ class NominationReview extends React.Component {
 
 
   componentDidMount() {
-    const { getNominations, getApproveElections, getTeams,nominations, getElectionTimeLine } = this.props;
+    const { getNominations, getApproveElections, getTeams,nominations } = this.props;
     this.setState({
       nominations: nominations,
     });
     getApproveElections();
     getTeams();
-    getElectionTimeLine();
   }
 
   togglePanel = panelIndex => (event, didExpand) => {
@@ -188,16 +184,8 @@ class NominationReview extends React.Component {
 
     this.setState({ selectedElection: event.target.value, });
     getNominations(event.target.value, this.state.selectedParty);
-    this.getElectionTimeline(event.target.value);
 
   };
-
-  getElectionTimeline = (electionId) => {
-    const { getElectionTimeLine } = this.props;
-    debugger;
-    getElectionTimeLine(electionId);
-  };
-
   handleChangeParty = (event) => {
     const { getNominations } = this.props;
     this.setState({ selectedParty: event.target.value, });
@@ -266,7 +254,7 @@ class NominationReview extends React.Component {
   };
 
   render() {
-    const { classes, nominations, ApproveElections, partyList, ElectionData } = this.props;
+    const { classes, nominations, ApproveElections, partyList } = this.props;
     const { expandedPanelIndex } = this.state;
     let selectedElection = this.state.selectedElection;
     if (!selectedElection) {
@@ -287,17 +275,6 @@ class NominationReview extends React.Component {
       return record;
     });
 
-
-    var nominationApprovalStart = moment(ElectionData.approvalStart).format("YYYY-MM-DDTHH:mm");
-    var nominationApprovalEnd = moment(ElectionData.approvalEnd).format("YYYY-MM-DDTHH:mm");
-    let today = new Date();
-    var TodayFormattedWithTime = moment(today).format("YYYY-MM-DDTHH:mm");
-    var errorMessage = "Nomination approval time should be within " + moment(ElectionData.approvalStart).format("DD MMM YYYY hh:mm a")  + " and " + moment(ElectionData.approvalEnd).format("DD MMM YYYY hh:mm a");
-    var isWithinValidTimeFrame = false;
-
-    if (moment(nominationApprovalStart).isBefore(TodayFormattedWithTime) && moment(TodayFormattedWithTime).isBefore(nominationApprovalEnd)) {
-      isWithinValidTimeFrame = true;
-    }
 
     const CandidateRow = (props) => {
       const { classes, candidate } = props;
@@ -541,16 +518,9 @@ class NominationReview extends React.Component {
           </div>
           <br />
           <br />
-          <Grid style={{ textAlign: 'right', marginRight: '25px' }} className={classes.label} item lg={12}>
-            { !isWithinValidTimeFrame ? <SummeryView
-                variant={"warning"}
-                className={classes.margin}
-                message={errorMessage}
-                style={{marginBottom:'10px'}}
-            /> : " "}
-          </Grid>
+
           <div style={{ width: '100%' }}>
-            {isWithinValidTimeFrame? nominationElements: null}
+            {nominationElements}
           </div>
           <br />
 
