@@ -28,7 +28,7 @@ import moment from 'moment';
 
 const styles = theme => ({
   root: {
-    width: '85%',
+    width: '90%',
     paddingLeft: 24
   },
   button: {

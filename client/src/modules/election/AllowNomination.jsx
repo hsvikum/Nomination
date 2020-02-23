@@ -10,6 +10,15 @@ import { getFieldOptions } from './state/ElectionAction';
 import { connect } from 'react-redux';
 
 const styles = theme => ({
+    content: {
+        [theme.breakpoints.up('sm')]: {
+            paddingLeft: theme.drawer.width,
+            flexShrink: 0,
+            paddingLeft: theme.spacing.unit
+
+        },
+        marginTop:-30
+    },
     button: {
         marginRight: theme.spacing.unit,
         right: 0
