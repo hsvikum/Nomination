@@ -12,7 +12,6 @@ import { getNominationListForPayment,
         postNominationPayments,
         getNominationPayments,
         getTeams,
-        getTeamsByTeamType,
         getApproveElections,
         updateNominationPayments,
         validateNominationPayment,
@@ -201,7 +200,6 @@ class NominationPayments extends React.Component {
         this.props.getNominationListForPayment(event.value,this.state.party)
        }
        if (name === 'partyType') {
-        this.props.getTeamsByTeamType(event.target.value);
         this.setState({ partyType: event.target.value,errorTextPartyType: '' });
     }
       //  if(name==='nomination' && this.state.election && this.state.party){
@@ -460,7 +458,7 @@ class NominationPayments extends React.Component {
     };
 
     render() {
-        const {classes, depositor,NominationPayments,onCloseModal,partyList,serialNo,approveElections,nominationListForPayment,nominationData,electionTimeline,partyListByType} = this.props;
+        const {classes, depositor,NominationPayments,onCloseModal,partyList,serialNo,approveElections,nominationListForPayment,nominationData,electionTimeline} = this.props;
         const {  numberformat } = this.state;
         // const {errorTextItems} = this.props;
         const payPerCandidate = (nominationData.length) ? nominationData[0].payPerCandidate :  '';
@@ -480,7 +478,7 @@ class NominationPayments extends React.Component {
             errorTextPayment = true;
           }
 
-        const suggestions = partyListByType.map(suggestion => ({
+        const suggestions = partyList.map(suggestion => ({
             value: suggestion.team_id,
             label: suggestion.team_name+" ("+suggestion.team_abbrevation+")",
           }));
@@ -503,12 +501,19 @@ class NominationPayments extends React.Component {
         <CloseIcon ref={this.state.currentSdocId}  color="red"/>
         {/* <a download={"filename"} href={"ok"}>filename</a> */}
         </div>);
+        
         return (
             <form className={classes.container} onSubmit={this.handleSubmit.bind(this)} noValidate autoComplete="off">
                 <Grid container spacing={2} xs={12}>
                     <Grid container   item lg={3}>
                     <CustomAutocompleteElection className={classes.textField} approveElections={approveElections} value={this.state.election} suggestions={suggestionsElections} handleChangeAutocomplete={this.handleChangeAutocomplete} />         
                     </Grid>
+                    <Grid container   item lg={3}>
+                    <CustomAutocompleteParty className={classes.textField} value={this.state.party} suggestions={suggestions} handleChange={this.handleChangeAutocomplete} />         
+                    </Grid>  
+                    <Grid container   item lg={3}>
+                    <CustomAutocompleteNomination errorTextNominationPaymentValidation={this.state.errorTextNominationPaymentValidation} className={classes.textField} nominationListForPayment={nominationListForPayment} value={this.state.nomination} suggestions={suggestionsNominations} handleChange={this.handleChangeAutocomplete} />         
+                    </Grid> 
                     <Grid container item lg={3}>
                         <Select
                             value={this.state.partyType}
@@ -524,14 +529,7 @@ class NominationPayments extends React.Component {
                             <MenuItem value={'candidate payment rpp'}>Registered Political Party ( RPP )</MenuItem>
                             <MenuItem value={'candidate payment ig'}>Indipendent Group ( IG )</MenuItem>
                         </Select>
-                    </Grid>  
-                    <Grid container   item lg={3}>
-                    <CustomAutocompleteParty className={classes.textField} value={this.state.party} suggestions={suggestions} handleChange={this.handleChangeAutocomplete} />         
-                    </Grid>  
-                    <Grid container   item lg={3}>
-                    <CustomAutocompleteNomination errorTextNominationPaymentValidation={this.state.errorTextNominationPaymentValidation} className={classes.textField} nominationListForPayment={nominationListForPayment} value={this.state.nomination} suggestions={suggestionsNominations} handleChange={this.handleChangeAutocomplete} />         
-                    </Grid> 
-                                         
+                    </Grid>                        
                 </Grid>
                 <Divider variant="middle" className={classes.topBottomSpace} />
                 <Grid style={{marginLeft:12}} container direction="row" justify="flex-start" alignItems="stretch" spacing={2}>                
@@ -704,14 +702,13 @@ const mapStateToProps = ({Nomination,Election}) => {
     const NominationPayments = Nomination.getNominationPayments;
     const nominationListForPayment = Nomination.nominationListForPayment;
     const partyList = Nomination.partyList;
-    const partyListByType = Nomination.partyListByType;
     const approveElections = Nomination.approveElections;
     const electionTimeline = Election.ElectionTimeLineData;
 
     const nominationPaymentValidation = Nomination.nominationPaymentValidation;
 
 
-    return {nominationListForPayment,nominationData,NominationPayments,partyList,approveElections,nominationPaymentValidation,electionTimeline,partyListByType};
+    return {nominationListForPayment,nominationData,NominationPayments,partyList,approveElections,nominationPaymentValidation,electionTimeline};
   };
 
   const mapActionsToProps = {
@@ -724,8 +721,7 @@ const mapStateToProps = ({Nomination,Election}) => {
     updateNominationPayments,
     validateNominationPayment,
     getUploadPath,
-    getElectionTimeLine,
-    getTeamsByTeamType
+    getElectionTimeLine
   };
   
  

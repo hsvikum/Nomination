@@ -38,25 +38,9 @@ const getAllTeams = async (req) => {
   
 };
 
-//Get all teams by team type
-const getAllTeamsByTeamType = async (req) => {
-  try {
-    const teams = await TeamRepo.fetchAllTeamsByTeamType(req.params.teamType);
-    if(!_.isEmpty(teams)){
-      return teams;
-    }else {
-      return [];
-    }
-  }catch (e){
-    console.log(e);
-    throw new ServerError("server error");
-  }
-};
-
 
 
 export default {
     getTeamById,
-    getAllTeams,
-    getAllTeamsByTeamType
+    getAllTeams
 }

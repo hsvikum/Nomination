@@ -19,5 +19,4 @@ export const URL_SCHEMA = Joi.object().keys({
   templateName: Joi.string(),
   keyName: Joi.string(),
   sid: Joi.string(),
-  teamType: Joi.string()
 });
