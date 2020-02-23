@@ -55,20 +55,12 @@ export default function reducer(state = initialState, action) {
                 new_election_module: action.payload
             };
         case RECIVE_PENDING_ELECTION_MODULE:  
-        // const AllElectionsPrev = state.AllElectionTemplates;
-        // const i = findApprovalIndex(AllElectionsPrev, action.payload.id);
-        // debugger;
-        // return {
-        //     ...state,
-        //     AllElectionTemplates: update(state.AllElectionTemplates, {[i]: {status: {$set: action.payload.status}}})
-        // };  
+        const AllElectionsPrev = state.AllElectionTemplates;
+        const i = findApprovalIndex(AllElectionsPrev, action.payload.id);
         return {
             ...state,
-            AllElectionTemplates: [
-                ...state.AllElectionTemplates,
-                action.payload
-            ]
-        };  
+            AllElectionTemplates: update(state.AllElectionTemplates, {[i]: {status: {$set: action.payload.status}}})
+        }; 
         case GET_APPROVED_ELECTION_MODULE:
             return {
                 ...state,
@@ -80,17 +72,10 @@ export default function reducer(state = initialState, action) {
                 PendingElectionModules: action.payload
             }; 
         case GET_REJECTED_ELECTION_MODULE:
-            const AllElectionsPrev = state.AllElectionTemplates;
-            const i = findApprovalIndex(AllElectionsPrev, action.payload.id);
-            debugger;
             return {
                 ...state,
-                AllElectionTemplates: update(state.AllElectionTemplates, {[i]: {status: {$set: action.payload.status}}})
+                RejectedElectionModules: action.payload
             };  
-            // return {
-            //     ...state,
-            //     RejectedElectionModules: action.payload
-            // };  
         case GET_ELECTION_TEMPLATE_DATA:
             return {
                 ...state,
