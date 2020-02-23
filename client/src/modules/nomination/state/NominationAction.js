@@ -456,18 +456,13 @@ const nominationListLoaded = (getNominationList) => {
   };
 };
 
-export function getNominationList(teamId) {
-  if(teamId){
-   var partyId = teamId
-  }else{
-    var partyId = sessionStorage.getItem('party_id');
-  }
+export function getNominationList() {
 
   return function (dispatch) {
      
     const response = axios
     .get(
-      `${API_BASE_URL}/elections/${sessionStorage.getItem('election_id')}/teams/${partyId}/divisions/${sessionStorage.getItem('division_id')}`,
+      `${API_BASE_URL}/elections/${sessionStorage.getItem('election_id')}/teams/${sessionStorage.getItem('party_id')}/divisions/${sessionStorage.getItem('division_id')}`,
     )
     .then(response => {
       const getNominationList = response.data;
