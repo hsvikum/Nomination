@@ -8,13 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
-import InfoIcon from '@material-ui/icons/Info';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
-
 // import { handleChange } from '../../modules/election/state/ElectionAction';
 import { connect } from 'react-redux';
-import color from '@material-ui/core/colors/amber';
 
 const styles = theme => ({
   root: {
@@ -29,7 +24,6 @@ const styles = theme => ({
   legend: {
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit,
-    marginRight:theme.spacing.unit * 2,
   },
   container: {
     display: 'flex',
@@ -64,9 +58,6 @@ class CheckboxesGroup extends React.Component {
             <form className={classes.container} noValidate>
             <Grid container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
             <FormLabel className={classes.legend} component="legend">Nomination Security Deposit Period</FormLabel>
-            <Tooltip TransitionComponent={Zoom} title="Security Deposit Start Date Should Before Nomination Start Date and Security Deposit End Date">
-            <InfoIcon color="action" />
-            </Tooltip>
             </Grid>
               <Grid  container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
               <Grid item lg={6}>
@@ -118,9 +109,6 @@ class CheckboxesGroup extends React.Component {
                   </Grid>
             <Grid container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
             <FormLabel className={classes.legend} component="legend">Nomination Period</FormLabel>
-            <Tooltip placement='right' TransitionComponent={Zoom} title="Nomination Start Date Should Before Nomination End Date and Can Be Within the Security Deposit TimeLine">
-            <InfoIcon color="action"  />
-            </Tooltip>
             </Grid>
               <Grid container direction="row" justify="flex-start" alignItems="stretch" spacing={4}>
                 <Grid item lg={6}>
@@ -172,9 +160,6 @@ class CheckboxesGroup extends React.Component {
                 </Grid>
               <Grid container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
             <FormLabel className={classes.legend} component="legend">Objection Period</FormLabel>
-            <Tooltip placement='right' TransitionComponent={Zoom} title="Objection Start Date Should Before Objection End Date and After Nomination End Date">
-            <InfoIcon color="action"  />
-            </Tooltip>
             </Grid>
               <Grid  container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
               <Grid item lg={6}>
@@ -227,9 +212,6 @@ class CheckboxesGroup extends React.Component {
                   
                   <Grid container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
             <FormLabel className={classes.legend} component="legend">Nomination Approval Period</FormLabel>
-            <Tooltip placement='right' TransitionComponent={Zoom} title="Nomination Approval Start Date Should Before Nomination Approval End Date and After Objection End Date">
-            <InfoIcon color="action" />
-            </Tooltip>
             </Grid>
               <Grid  container direction="row" justify="flex-start" alignItems="stretch" spacing={8}>
               <Grid item lg={6}>
